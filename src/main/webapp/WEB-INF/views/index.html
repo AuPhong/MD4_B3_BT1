@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="/layout::head"></header>
+<h1>ProductList</h1>
+<th:block>
+    <p th:if="${message}">
+        <span th:text="${message}"></span>
+    </p>
+    <form th:action="@{/product/search}"  method="get">
+        Input name to search:
+        <input type="text" onchange="this.form.submit()" th:value="${name}" name="name">
+    </form>
+</th:block>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    <tr th:each="product,status : ${productList}" th:class="${status.count}">
+        <td th:text="${product.getId()}"></td>
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td><a th:href="@{/product/{id}/edit(id=${product.getId()})}">Edit</a></td>
+        <td><a th:href="@{/product/{id}/delete(id=${product.getId()})}">Delete</a></td>
+        <td><a th:href="@{/product/{id}/detail(id=${product.getId()})}">Detail</a></td>
+    </tr>
+    <p><a th:href="@{/product/create}">Create new product</a></p>
+</table>
+<footer th:replace="/layout::footer">"</footer>
+</body>
+</html>
